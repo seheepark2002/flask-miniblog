@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="{{ url_for('crud.static', filename='users.css') }}">
+</head>
+<body>
+    <h2>User List</h2>
+
+    <p>
+        <a href="{{ url_for('crud.create_user') }}">Create New User</a>
+    </p>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td><a href="{{ url_for('crud.edit_user', user_id=user.id) }}">{{ user.id }}</a></td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+            <td>
+                <a href="{{ url_for('crud.edit_user', user_id=user.id) }}">
+                    Edit
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
