@@ -1,5 +1,6 @@
 from pathlib import Path #SQLite DB 경로 설정을 위한 Path 라이브러리
 from flask import Flask
+from flask_login import LoginManager
 from flask_migrate import Migrate # DB migration 관리
 from flask_sqlalchemy import SQLAlchemy # ORM
 from flask_wtf.csrf import CSRFProtect #CSRF 보안 기능
@@ -7,6 +8,13 @@ from apps.config import config
 
 db = SQLAlchemy() # SQLALchemy 객체 생성 #실제 Flask app과 연결은 create_app()에서 수행
 csrf = CSRFProtect() #CSRF 보호 객체
+# LoginManager 인스턴스화
+login_manager = LoginManager()
+# login_view 속성에 미로그인 시 리다이렉트하는 엔드포인트 지정
+login_manager.login_view = "auth.signup"
+# login_message 속성에 로그인 후에 표시할 메세지 지정
+login_manager.login_message = ""
+
 
 #Flask Application Factory
 #Flask 앱 생성 및 설정 초기화 함수
@@ -29,6 +37,9 @@ def create_app(config_key="local"):
     db.init_app(app) #SQLAlchemy Flask 앱과 연결
     Migrate(app, db) #Flask-Migrate 초기화
     
+    # login_manager를 애플리케이션과 연계하기
+    login_manager.init_app(app)
+
     #Blueprint import
     from apps.crud import views as crud_views
     from apps.miniblog import views as miniblog_views
@@ -40,6 +51,11 @@ def create_app(config_key="local"):
     app.register_blueprint(crud_views.crud, url_prefix="/crud")
     # miniblog blueprint 등록
     app.register_blueprint(miniblog_views.miniblog)
+
+    # auth 패키지로부터 views를 import 한다
+    from apps.auth import views as auth_views
+    # register_blueprint를 사용해 views의 auth를 앱에 등록
+    app.register_blueprint(auth_views.auth, url_prefix="/auth")
 
     return app
 

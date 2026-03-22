@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from apps.app import db
 from apps.models.user import User
 from apps.forms.user_form import UserForm
+from flask_login import login_required
 
 # Blueprint 생성
 #url_for 에서 "crud.route_name" 형태로 사용
@@ -56,6 +57,7 @@ def create_user():
 #사용자 목록 페이지
 #DB에 저장된 사용자 데이터 조회, users.html로 전달
 @crud.route("/users")
+@login_required
 def users():
     users = db.session.query(User).all()
     return render_template("crud/users.html", users=users)
