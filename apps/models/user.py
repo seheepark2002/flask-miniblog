@@ -25,7 +25,7 @@ class User(db.Model, UserMixin): #db.Model을 상속한 User클래스 작성
         self.password_hash = generate_password_hash(password)
 
     # 비밀번호 체크하기
-    def check_password(self, password):
+    def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
     
     # 이메일 중복 체크하기

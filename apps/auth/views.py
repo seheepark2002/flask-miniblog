@@ -1,13 +1,13 @@
 #apps.app으로부터 db를 import
 from apps.app import db
 # 작성한 SignUpForm 클래스  import
-from apps.auth.forms import SignUpForm
+from apps.auth.forms import SignUpForm, LoginForm
 # crud 앱의 모델의 User 클래스 import
 from apps.models.user import User
 # flash, url_for, redirect, request를 추가로 import
 from flask import Blueprint, render_template, flash, url_for, redirect, request
 # flask_login으로부터 login_user를 import. login_user 이용해서 등록한 사용자 정보 세션에 저장
-from flask_login import login_user
+from flask_login import login_user, logout_user
 from sqlalchemy.exc import IntegrityError
 
 
@@ -18,10 +18,6 @@ auth = Blueprint(
     template_folder="templates",
     static_folder="static"
 )
-# login 엔드포인트 작성하기
-@auth.route("/")
-def login():
-    return render_template("auth/login.html")
 
 @auth.route("/signup", methods=["GET","POST"])
 def signup():
@@ -62,3 +58,19 @@ def signup():
         return redirect(next_)
 
     return render_template("auth/signup.html", form=form)
+
+@auth.route("/login", methods=["GET","POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # 이메일 주소로 데이터베이스에 사용자가 있는지 검사
+        user = User.query.filter_by(email=form.email.data).first()
+
+        # 사용자가 존재하고 비밀번호가 일치하면 로그인을 허가함
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user)
+            return redirect(url_for("crud.users"))
+        
+
+        flash("Invalid email or password.")
+    return render_template("auth/login.html", form=form)
