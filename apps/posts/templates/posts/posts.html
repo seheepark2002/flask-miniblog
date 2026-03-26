@@ -1,0 +1,26 @@
+<!-- 게시글 목록 페이지 -->
+<!-- base.html 불러오기 -->
+ {% extends "base.html" %}
+ <!--타이틀 블록 -->
+ {% block title %}Posts{% endblock %}
+ <!--콘텐츠 블록 -->
+ {% block content %}
+ <!-- 제목 -->
+  <h2>Posts</h2>
+ <!-- 새 글 작성 링크 -->
+  <p>
+  <a href="{{ url_for('posts.create_post') }}">Create New Post</a>
+  </p>
+
+ <!-- 게시물 리스트 -->
+  {% for post in posts %}
+    <div>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <small>{{ post.created_at.strftime("%Y-%m-%d  %H:%M") }}</small>
+    </div>
+  <!-- 아직 게시물이 없는 경우 -->
+  {% else %}
+    <p>No posts yet</p>
+  {% endfor %}
+ {% endblock %}

@@ -69,10 +69,18 @@ def login():
         # 사용자가 존재하고 비밀번호가 일치하면 로그인을 허가함
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            return redirect(url_for("crud.users"))
-        
 
+            next_ = request.args.get("next")
+
+            # next 없으면 메인 페이지가 기본값
+            if next_ is None or not next_.startswith("/"):
+                next_ = url_for("miniblog.blog_main")
+
+            # 원래 가려던 페이지로 복귀
+            return redirect(next_)
+        
         flash("Invalid email or password.")
+
     return render_template("auth/login.html", form=form)
 
 @auth.route("/logout")

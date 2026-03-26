@@ -1,9 +1,10 @@
-{% extends "auth/base.html" %}
+{% extends "base.html" %}
 {% block title %}login{% endblock %}
 {% block content %}
 
 <h2>login</h2>
-<form action="{{ url_for('auth.login') }}"
+<!-- 로그인 POST에도 next 유지되도록 next = request.args.get('next') 추가함 -->
+<form action="{{ url_for('auth.login', next = request.args.get('next')) }}"
     method="post"
     novalidate="novalidate"
 >

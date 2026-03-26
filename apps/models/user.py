@@ -3,8 +3,11 @@ from apps.app import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class User(db.Model, UserMixin): #db.Model을 상속한 User클래스 작성
-    __tablename__ = "users" #테이블명 지정 , 사용자 정보 저장 테이블
+#User클래스 데이터베이스 테이블로 변환
+class User(db.Model, UserMixin): 
+    
+    #테이블명 지정 , 사용자 정보 저장 테이블
+    __tablename__ = "users" 
 
     #컬럼 정의
     id = db.Column(db.Integer, primary_key=True)

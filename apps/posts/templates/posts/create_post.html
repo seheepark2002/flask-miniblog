@@ -1,0 +1,43 @@
+<!-- base.html 불러오기 -->
+{% extends "base.html" %}
+
+<!-- 이름 블록 -->
+{% block title %}Create Post{% endblock %}
+
+<!-- 내용 블록 -->
+{% block content %}
+
+<!-- 이름 -->
+<h2>Create Post</h2>
+
+<!-- 폼 형성 -->
+<form method = "POST" novalidate = "novalidate">
+    <!-- csrf 실행 -->
+    {{ form.hidden_tag() }}
+
+    <!-- 제목 입력 -->
+    <p>
+        {{ form.title.label }} <br>
+        {{ form.title(placeholder = "Title") }}
+    </p>
+    <!-- 제목 입력값 에러일 경우 -->
+     {% for error in form.title.errors %}
+        <span style="color: red;">{{ error }}</span>
+     {% endfor %}
+    
+    <!-- 내용 입력 -->
+    <p>
+        {{ form.content.label }} <br>
+        {{ form.content(placeholder = "Content") }}
+    </p>
+    <!-- 내용 입력 에러일 경우 -->
+     {% for error in form.content.errors %}
+        <span style="color: red;">{{ error }}</span>
+     {% endfor %}
+    
+    <!-- 게시 -->
+     <p>{{ form.submit() }}</p>
+</form>
+
+{% endblock %}
+
