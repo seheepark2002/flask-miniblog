@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>miniblog</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='userminiblog.css')}}"/>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}User Miniblog{% endblock %}
+{% block content %}
     <h1>{{ nickname }}'s miniblog</h1>
-</body>
-</html>
+{% endblock %}

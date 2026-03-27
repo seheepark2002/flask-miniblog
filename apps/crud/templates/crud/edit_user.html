@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
-    <link rel="stylesheet" href="{{ url_for('crud.static', filename='edit_user.css') }}">
-</head>
-<body>
-    {% extends "crud/base.html" %}
+
+    {% extends "base.html" %}
     {% block title %}Edit User{% endblock %}
     {% block content %}
     <h2>Edit User</h2>
@@ -39,5 +31,3 @@
      <p><input type="submit" value="edit"></p>
     </form>
     {% endblock %}
-</body>
-</html>

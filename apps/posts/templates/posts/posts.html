@@ -6,7 +6,7 @@
  <!--콘텐츠 블록 -->
  {% block content %}
  <!-- 제목 -->
-  <h2>Posts</h2>
+ <h1>{{ current_user.username }}'s miniblog</h1>
  <!-- 새 글 작성 링크 -->
   <p>
   <a href="{{ url_for('posts.create_post') }}">Create New Post</a>

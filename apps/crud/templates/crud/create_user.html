@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% extends "crud/base.html" %}
+
+    {% extends "base.html" %}
     {% block title %}Create User{% endblock %}
     {% block content %}
-    <title>Create User</title>
-</head>
-<body>
     <h2>Create User</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -46,5 +39,3 @@
     <p>{{ form.submit() }}</p>
     </form>
     {% endblock %}
-</body>
-</html>
